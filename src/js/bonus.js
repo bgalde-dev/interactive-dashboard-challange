@@ -1,25 +1,28 @@
 function buildGauge(wfreq) {
-    // Enter the Washing Frequency Between 0 and 180
+    // Enter the washing frequency between 0 and 180
     // 180/9 = 20
-    let level = parseFloat(wfreq) * 20;
+    let level = +wfreq * 20;
 
-    // Do some maths
-    let degrees = 180 - level;
+    // Do some maths to figure out the needle
     let needleRadius = 0.75;
     let needleBase = 0.03;
-    let radians = (degrees * Math.PI) / 180;
-    let x = needleRadius * Math.cos(radians);
-    let y = needleRadius * Math.sin(radians);
-    let x1 = needleBase * Math.cos(radians + Math.PI / 2);
-    let y1 = needleBase * Math.sin(radians + Math.PI / 2);
+    let needleRadians = ((180 - level) * Math.PI) / 180;
+    let x = needleRadius * Math.cos(needleRadians);
+    let y = needleRadius * Math.sin(needleRadians);
+    let x1 = needleBase * Math.cos(needleRadians + Math.PI / 2);
+    let y1 = needleBase * Math.sin(needleRadians + Math.PI / 2);
     let x2 = -x1;
     let y2 = -y1;
 
     // Path for needle
     let path = `M ${x1},${y1} L ${x2},${y2} L ${x},${y} Z`;
 
+    let gaugeLabels = ["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""];
+
     let data = [
         {
+            // Place a circle in the center this is actually part of the needle
+            // but also will display the actual wash freq on hover.
             type: "scatter",
             x: [0],
             y: [0],
@@ -31,7 +34,7 @@ function buildGauge(wfreq) {
         {
             values: [50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50],
             rotation: 90,
-            text: ["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""],
+            text: gaugeLabels,
             textinfo: "text",
             textposition: "inside",
             marker: {
@@ -48,7 +51,7 @@ function buildGauge(wfreq) {
                     "rgba(255,255,255,0)"
                 ]
             },
-            labels: ["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""],
+            labels: gaugeLabels,
             hoverinfo: "label",
             hole: 0.5,
             type: "pie",
