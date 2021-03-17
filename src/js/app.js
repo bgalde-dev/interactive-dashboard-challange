@@ -1,4 +1,4 @@
-const dataFile = "/resources/data/samples.json";
+const dataFile = "../../resources/data/samples.json";
 
 function buildMetadata(sampleName) {
     d3.json(dataFile).then((samples) => {
