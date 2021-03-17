@@ -1,35 +1,37 @@
 function buildGauge(wfreq) {
     // Enter the Washing Frequency Between 0 and 180
+    // 180/9 = 20
     let level = parseFloat(wfreq) * 20;
 
     // Do some maths
     let degrees = 180 - level;
-    let radius = 0.5; 
+    let needleRadius = 0.75;
+    let needleBase = 0.03;
     let radians = (degrees * Math.PI) / 180;
-    let x = radius * Math.cos(radians);
-    let y = radius * Math.sin(radians);
+    let x = needleRadius * Math.cos(radians);
+    let y = needleRadius * Math.sin(radians);
+    let x1 = needleBase * Math.cos(radians + Math.PI / 2);
+    let y1 = needleBase * Math.sin(radians + Math.PI / 2);
+    let x2 = -x1;
+    let y2 = -y1;
 
-    // Path May Have to Change to Create a Better Triangle
-    let mainPath = "M-.0 -0.05 L  .0 0.05 L";
-    let pathX = String(x);
-    let space = " ";
-    let pathY = String(y);
-    let pathEnd = " Z";
-    let path = mainPath.concat(pathX, space, pathY, pathEnd);
+    // Path for needle
+    let path = `M ${x1},${y1} L ${x2},${y2} L ${x},${y} Z`;
+
     let data = [
         {
             type: "scatter",
-            x:[0],
-            y:[0],
-            marker: { size: 12, color: "850000" },
+            x: [0],
+            y: [0],
+            marker: { size: 12, color: "rgb(139, 0, 0)" },
             showlegend: false,
             text: wfreq,
             hoverinfo: "text"
         },
         {
-            values: [50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50/9, 50],
+            values: [50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50 / 9, 50],
             rotation: 90,
-            text:["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""],
+            text: ["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""],
             textinfo: "text",
             textposition: "inside",
             marker: {
@@ -46,7 +48,7 @@ function buildGauge(wfreq) {
                     "rgba(255,255,255,0)"
                 ]
             },
-            labels:["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""],
+            labels: ["8-9", "7-8", "6-7", "5-6", "4-5", "3-4", "2-3", "1-2", "0-1", ""],
             hoverinfo: "label",
             hole: 0.5,
             type: "pie",
@@ -59,17 +61,17 @@ function buildGauge(wfreq) {
             {
                 type: "path",
                 path: path,
-                fillcolor: "850000",
+                fillcolor: "rgb(139, 0, 0)",
                 line: {
-                    color: "850000"
+                    color: "rgb(139, 0, 0)"
                 }
             }
         ],
-        title: "Belly Button Washing Frequency <br> Scrubs per Week",
+        title: "<b>Belly Button Washing Frequency</b><br>Scrubs per Week",
         height: 500,
         width: 500,
         xaxis: {
-            zeroline:false,
+            zeroline: false,
             showticklabels: false,
             showgrid: false,
             range: [-1, 1]
@@ -81,6 +83,6 @@ function buildGauge(wfreq) {
             range: [-1, 1]
         }
     }
-    
+
     Plotly.newPlot("gauge", data, layout);
 }

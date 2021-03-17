@@ -12,8 +12,8 @@ function buildMetadata(sampleName) {
         // Add each key value pair to the metadata panel
         Object.entries(sampleData).forEach(([key, value]) => {
             let h6 = panel.append("h6").style("font-size", "10px");
-            h6.append("span").text(`${key.toUpperCase()}: `).style("font-weight", "bold");
-            h6.append("span").text(`${value}`);
+            h6.append("span").attr("id","meta-key").text(`${key.toUpperCase()}: `).style("font-weight", "bold");
+            h6.append("span").attr("id","meta-value").text(`${value}`);
         });
         
         // build the gauge for bonus
