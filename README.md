@@ -2,7 +2,7 @@
 
 A fullstack data analysis and interactive dashboard using the Belly Button Biodiversity Dataset using Plotly and, D3.
 
-The link to the functioning dashboard can be found [HERE](src/web/index.html)
+The link to the functioning dashboard can be found [HERE](https://bgalde-dev.github.io/interactive-dashboard-challange/src/web/index.html)
 
 # Instructions for challenge
 
